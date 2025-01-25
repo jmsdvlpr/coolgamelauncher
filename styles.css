@@ -9,8 +9,11 @@ body {
 :root {
   --bg-color: #1e1e1e;
   --text-color: #ffffff;
-  --primary-color: #6a0dad;
-  --secondary-color: #ff7f00;
+  --primary-color: #9b5de5; /* Vibrant purple */
+  --secondary-color: #f15bb5; /* Bright pinkish orange */
+  --accent-color: #fee440; /* Yellow for highlights */
+  --hover-color: #00bbf9; /* Aqua for hover effects */
+  --border-radius: 10px;
 }
 
 .light {
@@ -21,10 +24,17 @@ body {
 header {
   text-align: center;
   padding: 50px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
   font-size: 2.5rem;
+  background: linear-gradient(90deg, var(--accent-color), var(--hover-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .buttons {
@@ -37,12 +47,15 @@ h1 {
   background-color: var(--primary-color);
   color: #fff;
   text-decoration: none;
-  border-radius: 5px;
-  transition: transform 0.3s;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .button:hover {
   transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  background-color: var(--hover-color);
 }
 
 .download-btn {
@@ -51,8 +64,15 @@ h1 {
   background-color: var(--secondary-color);
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.download-btn:hover {
+  background-color: var(--hover-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .theme-toggle {
@@ -60,7 +80,20 @@ h1 {
   bottom: 20px;
   right: 20px;
   width: 50px;
+  height: 50px;
+  background-color: var(--accent-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.theme-toggle:hover {
+  transform: rotate(360deg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .error-banner {
@@ -68,11 +101,12 @@ h1 {
   top: -50px;
   left: 0;
   right: 0;
-  background-color: red;
+  background: linear-gradient(90deg, red, darkred);
   color: #fff;
   text-align: center;
   padding: 10px;
   transition: top 0.5s;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 
 .error-banner.show {
