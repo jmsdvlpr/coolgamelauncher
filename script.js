@@ -1,52 +1,43 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const themeToggle = document.getElementById("theme-toggle");
-  const themeIcon = document.getElementById("theme-icon");
-  const errorBanner = document.getElementById("error-banner");
-  const sendBtn = document.getElementById("send-btn");
+// Dark/Light Mode Toggle
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const body = document.body;
 
-  // Theme toggle logic
-  const setTheme = (theme) => {
-    document.body.className = theme;
-    document.documentElement.style.setProperty(
-      "--bg-light",
-      theme === "dark" ? "var(--bg-dark)" : "#f5f5f5"
-    );
-    document.documentElement.style.setProperty(
-      "--text-light",
-      theme === "dark" ? "var(--text-dark)" : "#000000"
-    );
-    themeIcon.src = theme === "dark" ? "sun.svg" : "moon.svg";
-    document.cookie = `theme=${theme}; path=/`;
-  };
-
-  themeToggle.addEventListener("click", () => {
-    const newTheme = document.body.className === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-  });
-
-  // Load saved theme from cookies
-  const savedTheme = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("theme="))
-    ?.split("=")[1];
-  setTheme(savedTheme || "light");
-
-  // Support form validation
-  if (sendBtn) {
-    sendBtn.addEventListener("click", () => {
-      const email = document.getElementById("email").value;
-      const subject = document.getElementById("subject").value;
-
-      if (!email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
-        errorBanner.style.top = "0";
-        setTimeout(() => {
-          errorBanner.style.top = "-50px";
-        }, 5000);
-      } else {
-        window.location.href = `mailto:jamespersonalproton@proton.me?subject=${encodeURIComponent(
-          subject
-        )}&body=Sent from: ${encodeURIComponent(email)}`;
-      }
-    });
-  }
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    const currentTheme = body.classList.contains('dark-mode') ? 'dark' : 'light';
+    localStorage.setItem('theme', currentTheme);
+    themeIcon.src = body.classList.contains('dark-mode') ? 'sun.png' : 'moon.png';
 });
+
+// Apply saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    body.classList.add('dark-mode');
+    themeIcon.src = 'sun.png';
+} else {
+    body.classList.remove('dark-mode');
+    themeIcon.src = 'moon.png';
+}
+
+// Support Form Email Validation
+document.getElementById('support-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    
+    if (!validateEmail(email)) {
+        document.getElementById('error-msg').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('error-msg').style.display = 'none';
+        }, 5000);
+    } else {
+        window.location.href = `mailto:jamespersonalproton@proton.me?subject=${subject}&body=${email}`;
+    }
+});
+
+function validateEmail(email) {
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return re.test(email);
+}
