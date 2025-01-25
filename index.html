@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Home</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>Welcome to James' Website</h1>
-    <nav>
-      <a href="download.html">Download</a>
-      <a href="support.html">Support</a>
-    </nav>
-  </header>
-  <main>
+    <header>
+        <div class="logo">My Website</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="download.html">Download</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="hero">
+        <h1>Welcome to My Website <span>Awesome</span></h1>
+        <p>Your journey starts here. Explore and interact!</p>
+        <a href="download.html" class="btn">Get Started</a>
+    </div>
+
     <section class="about">
-      <h2>About Us</h2>
-      <p>This is a sleek, modern, and animated website created to demonstrate modern web development techniques.</p>
+        <h2>About Us</h2>
+        <p>We provide amazing content and tools that help you grow.</p>
     </section>
-  </main>
-  <button id="theme-toggle">
-    <img id="theme-icon" src="moon.svg" alt="Toggle Theme">
-  </button>
-  <script src="script.js"></script>
+
+    <footer>
+        <button class="theme-toggle" id="theme-toggle">
+            <img id="theme-icon" src="moon.png" alt="theme-toggle">
+        </button>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
