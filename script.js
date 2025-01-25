@@ -1,43 +1,40 @@
-// Dark/Light Mode Toggle
-const themeToggle = document.getElementById('theme-toggle');
-const themeIcon = document.getElementById('theme-icon');
-const body = document.body;
+// Theme toggling with cookies
+const themeToggle = document.getElementById("theme-toggle");
 
-themeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    const currentTheme = body.classList.contains('dark-mode') ? 'dark' : 'light';
-    localStorage.setItem('theme', currentTheme);
-    themeIcon.src = body.classList.contains('dark-mode') ? 'sun.png' : 'moon.png';
-});
-
-// Apply saved theme
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-    body.classList.add('dark-mode');
-    themeIcon.src = 'sun.png';
-} else {
-    body.classList.remove('dark-mode');
-    themeIcon.src = 'moon.png';
+function setTheme(theme) {
+  document.body.className = theme;
+  themeToggle.src = theme === "light" ? "sun.png" : "moon.png";
+  document.cookie = `theme=${theme};path=/;`;
 }
 
-// Support Form Email Validation
-document.getElementById('support-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    
-    if (!validateEmail(email)) {
-        document.getElementById('error-msg').style.display = 'block';
-        setTimeout(() => {
-            document.getElementById('error-msg').style.display = 'none';
-        }, 5000);
-    } else {
-        window.location.href = `mailto:jamespersonalproton@proton.me?subject=${subject}&body=${email}`;
-    }
+function getTheme() {
+  const match = document.cookie.match(/theme=(light|dark)/);
+  return match ? match[1] : "dark";
+}
+
+themeToggle.addEventListener("click", () => {
+  const newTheme = document.body.className === "dark" ? "light" : "dark";
+  setTheme(newTheme);
 });
 
-function validateEmail(email) {
-    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return re.test(email);
-}
+setTheme(getTheme());
+
+// Support form validation
+const supportForm = document.getElementById("support-form");
+const errorBanner = document.getElementById("error-banner");
+
+supportForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const subject = document.getElementById("subject").value;
+
+  if (!email.includes("@")) {
+    errorBanner.classList.add("show");
+    setTimeout(() => errorBanner.classList.remove("show"), 5000);
+    return;
+  }
+
+  window.location.href = `mailto:jamespersonalproton@proton.me?subject=${encodeURIComponent(
+    subject
+  )}&body=${encodeURIComponent("From: " + email)}`;
+});
